@@ -1,0 +1,82 @@
+<div class="admin-page">
+  <h1>Panel de Administración</h1>
+  <p>Sube nuevas especies con sus modelos 3D, genera códigos QR automáticamente.</p>
+
+  <% if (typeof query !== 'undefined' && query.uploaded) { %>
+    <div class="alert alert-success">Especie añadida correctamente.</div>
+  <% } %>
+  <% if (typeof query !== 'undefined' && query.deleted) { %>
+    <div class="alert alert-info">Especie eliminada.</div>
+  <% } %>
+
+  <div class="admin-grid">
+    <div class="upload-form card">
+      <h2>Nueva Especie</h2>
+      <form action="/admin/upload" method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="name">Nombre común *</label>
+          <input type="text" id="name" name="name" required placeholder="Ej: Mariposa Monarca">
+        </div>
+        <div class="form-group">
+          <label for="scientificName">Nombre científico</label>
+          <input type="text" id="scientificName" name="scientificName" placeholder="Ej: Danaus plexippus">
+        </div>
+        <div class="form-group">
+          <label for="description">Descripción</label>
+          <textarea id="description" name="description" rows="3" placeholder="Describe la especie..."></textarea>
+        </div>
+        <div class="form-group">
+          <label for="habitat">Hábitat</label>
+          <input type="text" id="habitat" name="habitat" placeholder="Ej: Bosques templados de Norteamérica">
+        </div>
+        <div class="form-group">
+          <label for="model">Modelo 3D * (.glb, .gltf, .ply, .obj)</label>
+          <input type="file" id="model" name="model" accept=".glb,.gltf,.ply,.obj" required>
+          <small>GLB recomendado para AR. PLY/OBJ solo visor web (sin AR).</small>
+        </div>
+        <div class="form-group">
+          <label for="textures">Texturas (opcional, .jpg .png)</label>
+          <input type="file" id="textures" name="textures" accept=".jpg,.jpeg,.png" multiple>
+          <small>Para modelos OBJ o PLY sin color. Se aplican como textura.</small>
+        </div>
+        <div class="form-group">
+          <label for="thumbnail">Imagen miniatura (opcional)</label>
+          <input type="file" id="thumbnail" name="thumbnail" accept="image/*">
+        </div>
+        <div class="form-group">
+          <label for="arScale">Escala AR</label>
+          <select id="arScale" name="arScale">
+            <option value="auto">Automática</option>
+            <option value="fixed">Fija</option>
+          </select>
+        </div>
+        <button type="submit" class="btn-submit">Subir Especie</button>
+      </form>
+    </div>
+
+    <div class="species-list card">
+      <h2>Especies registradas (<%= species.length %>)</h2>
+      <% if (species.length === 0) { %>
+        <p class="empty">No hay especies. Sube la primera usando el formulario.</p>
+      <% } else { %>
+        <div class="list">
+          <% species.forEach(item => { %>
+            <div class="list-item">
+              <div class="list-item-info">
+                <strong><%= item.name %></strong>
+                <% if (item.scientificName) { %><small><%= item.scientificName %></small><% } %>
+                <span class="model-format"><%= item.modelFormat.replace('.','').toUpperCase() %></span>
+              </div>
+              <div class="list-item-actions">
+                <a href="/especie/<%= item.id %>" class="btn-small">Ver</a>
+                <form action="/admin/delete/<%= item.id %>" method="POST" style="display:inline" onsubmit="return confirm('¿Eliminar <%= item.name %>?')">
+                  <button type="submit" class="btn-small btn-danger">Eliminar</button>
+                </form>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+      <% } %>
+    </div>
+  </div>
+</div>

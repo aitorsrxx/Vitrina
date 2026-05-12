@@ -1,0 +1,6 @@
+node_modules/
+public/uploads/*
+public/qrcodes/*
+!public/uploads/.gitkeep
+!public/qrcodes/.gitkeep
+*.env

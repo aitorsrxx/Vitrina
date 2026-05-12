@@ -1,0 +1,62 @@
+[
+  {
+    "id": "02cf2fe7-7a97-4540-ada8-61fff1fef79c",
+    "name": "Cala",
+    "scientificName": "CCAla",
+    "description": "rgdgdgdr",
+    "habitat": "sefsefsefsef",
+    "modelPath": "/uploads/0c96622c-5917-4bf0-9274-b3e4107f5641.ply",
+    "modelFormat": ".ply",
+    "modelType": "mesh",
+    "thumbnail": null,
+    "textures": [],
+    "arScale": "auto",
+    "createdAt": "2026-05-12T07:02:11.053Z"
+  },
+  {
+    "id": "470db3df-f03f-41c8-a92e-00e4f73c65ae",
+    "name": "hfthfh",
+    "scientificName": "fthtfhfth",
+    "description": "fthfthtff",
+    "habitat": "",
+    "modelPath": "/uploads/4c289e8f-a02d-43ac-9c23-96cb3e941818.glb",
+    "modelFormat": ".glb",
+    "modelType": "mesh",
+    "thumbnail": null,
+    "textures": [],
+    "arScale": "auto",
+    "createdAt": "2026-05-12T07:03:15.040Z"
+  },
+  {
+    "id": "0c6b8b82-ef3c-40c6-b4be-8eafb6e07d6a",
+    "name": "65y6y5",
+    "scientificName": "5y6y565",
+    "description": "y5jhgjghj",
+    "habitat": "gjhghj",
+    "modelPath": "/uploads/c0150cc3-56cb-481d-9072-d0a9b58f5114.obj",
+    "modelFormat": ".obj",
+    "modelType": "mesh",
+    "thumbnail": null,
+    "textures": [],
+    "arScale": "auto",
+    "createdAt": "2026-05-12T07:05:41.716Z"
+  },
+  {
+    "id": "4c53f6c5-1d3b-4128-b14a-124c67e079b5",
+    "name": "gato",
+    "scientificName": "gato",
+    "description": "gato",
+    "habitat": "casa",
+    "modelPath": "/uploads/4d7fc8df-375b-4e82-9384-9c50285f2ba8.obj",
+    "modelFormat": ".obj",
+    "thumbnail": null,
+    "textures": [
+      {
+        "name": "Cat_diffuse.jpg",
+        "path": "/uploads/2580a6a6-0e91-45ee-a46b-95743d31ef0d.jpg"
+      }
+    ],
+    "arScale": "auto",
+    "createdAt": "2026-05-12T07:21:29.028Z"
+  }
+]

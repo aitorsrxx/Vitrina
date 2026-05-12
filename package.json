@@ -1,0 +1,16 @@
+{
+  "name": "vitrina-3d",
+  "version": "1.0.0",
+  "description": "Vitrina virtual con escaneos 3D de especies, QR y realidad aumentada",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.21.0",
+    "multer": "^1.4.5-lts.1",
+    "qrcode": "^1.5.4",
+    "uuid": "^10.0.0"
+  }
+}
