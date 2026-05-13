@@ -1,18 +1,109 @@
-<div class="hero">
-  <h1>Catalogo de Especies</h1>
-  <p>Explora los escaneos 3D de nuestra coleccion. Escanea el QR en la vitrina o selecciona una especie para verla en realidad aumentada.</p>
-</div>
+<div class="landing">
+  <!-- Hero -->
+  <section class="hero-section">
+    <div class="hero-bg"></div>
+    <div class="hero-content" data-aos="fade-up">
+      <span class="hero-tag">Coleccion Digital</span>
+      <h1>Explora la Naturaleza en <em>3D</em></h1>
+      <p>Escanea, visualiza y coloca especies disecadas en tu espacio con realidad aumentada. Un puente entre la vitrina tradicional y la tecnologia inmersiva.</p>
+      <div class="hero-buttons">
+        <a href="#galeria" class="btn-hero btn-primary">Ver Coleccion</a>
+        <% if (species.length === 0) { %>
+        <a href="/admin" class="btn-hero btn-outline">Subir Especie</a>
+        <% } %>
+      </div>
+    </div>
+    <div class="hero-decoration left" data-aos="fade-right" data-aos-delay="400">
+      <img src="/assets/plant-decoration.png" alt="" draggable="false">
+    </div>
+    <div class="hero-decoration right" data-aos="fade-left" data-aos-delay="600">
+      <img src="/assets/plant-decoration.png" alt="" draggable="false">
+    </div>
+    <div class="scroll-indicator" data-aos="fade-up" data-aos-delay="1200">
+      <span>Desliza</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
 
-<div class="gallery">
-  <% if (species.length === 0) { %>
-    <div class="empty-state">
+  <!-- Features -->
+  <section class="features-section" id="features">
+    <div class="section-header" data-aos="fade-up">
+      <span class="section-tag">Tecnologia</span>
+      <h2>Tu vitrina, reimaginada</h2>
+      <p>Cada especie merece ser vista desde todos los angulos</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card" data-aos="fade-up" data-aos-delay="0">
+        <div class="feature-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <h3>Escaneos 3D</h3>
+        <p>Sube modelos GLB, PLY u OBJ. Visualizacion interactiva con zoom, rotacion y orbitacion completa.</p>
+      </div>
+      <div class="feature-card" data-aos="fade-up" data-aos-delay="150">
+        <div class="feature-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <h3>Realidad Aumentada</h3>
+        <p>Abre en tu movil, apunta la camara y coloca el modelo 3D en tu entorno real. Como tener la especie en tus manos.</p>
+      </div>
+      <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+        <div class="feature-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        </div>
+        <h3>Codigos QR</h3>
+        <p>Cada especie genera automaticamente un QR unico. Imprimelo y pegalo en la vitrina junto al especimen real.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="steps-section" id="como-funciona">
+    <div class="section-header" data-aos="fade-up">
+      <span class="section-tag">Proceso</span>
+      <h2>Asi de simple</h2>
+    </div>
+    <div class="steps-list">
+      <div class="step-item" data-aos="fade-right">
+        <div class="step-number">01</div>
+        <div class="step-text">
+          <h3>Sube tu modelo 3D</h3>
+          <p>Desde el panel de administracion, carga el archivo GLB, PLY u OBJ de la especie escaneada.</p>
+        </div>
+      </div>
+      <div class="step-item" data-aos="fade-right" data-aos-delay="100">
+        <div class="step-number">02</div>
+        <div class="step-text">
+          <h3>Genera el QR</h3>
+          <p>Automaticamente se crea un codigo QR unico que enlaza a la pagina de la especie.</p>
+        </div>
+      </div>
+      <div class="step-item" data-aos="fade-right" data-aos-delay="200">
+        <div class="step-number">03</div>
+        <div class="step-text">
+          <h3>Colocalo en la vitrina</h3>
+          <p>Imprime el QR y pegalo junto al especimen. Los visitantes escanean y ven el modelo 3D.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section class="gallery-section" id="galeria">
+    <div class="section-header" data-aos="fade-up">
+      <span class="section-tag">Catalogo</span>
+      <h2>Especies en la coleccion</h2>
+    </div>
+    <% if (species.length === 0) { %>
+    <div class="empty-state" data-aos="fade-up">
       <div class="empty-icon">&#x1F331;</div>
       <h2>No hay especies aun</h2>
       <p>Ve al <a href="/admin">panel de administracion</a> para anadir la primera especie a la coleccion.</p>
     </div>
-  <% } else { %>
-    <% species.forEach(item => { %>
-      <a href="/especie/<%= item.id %>" class="gallery-card">
+    <% } else { %>
+    <div class="gallery">
+      <% species.forEach((item, i) => { %>
+      <a href="/especie/<%= item.id %>" class="gallery-card" data-aos="fade-up" data-aos-delay="<%= i * 100 %>">
         <div class="card-image">
           <% if (item.thumbnail) { %>
             <img src="<%= item.thumbnail %>" alt="<%= item.name %>" loading="lazy">
@@ -20,23 +111,26 @@
             <img src="<%= item.textures[0].path %>" alt="<%= item.name %>" loading="lazy">
           <% } else { %>
             <div class="card-placeholder">
-              <model-viewer
-                src="<%= item.modelPath %>"
-                camera-controls
-                auto-rotate
-                interaction-prompt="none"
-                style="width:100%;height:100%"
-              ></model-viewer>
+              <model-viewer src="<%= item.modelPath %>" camera-controls auto-rotate interaction-prompt="none" style="width:100%;height:100%"></model-viewer>
             </div>
           <% } %>
         </div>
         <div class="card-info">
           <h3><%= item.name %></h3>
-          <% if (item.scientificName) { %>
-            <em><%= item.scientificName %></em>
-          <% } %>
+          <% if (item.scientificName) { %><em><%= item.scientificName %></em><% } %>
         </div>
       </a>
-    <% }) %>
-  <% } %>
+      <% }) %>
+    </div>
+    <% } %>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" data-aos="fade-up">
+    <div class="cta-content">
+      <h2>Tienes un escaneo 3D para compartir</h2>
+      <p>Sube especies a la coleccion y comparte el conocimiento con codigos QR interactivos.</p>
+      <a href="/admin" class="btn-hero btn-primary">Ir al Panel de Administracion</a>
+    </div>
+  </section>
 </div>
