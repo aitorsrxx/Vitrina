@@ -1,14 +1,14 @@
 <div class="hero">
-  <h1>Catálogo de Especies</h1>
-  <p>Explora los escaneos 3D de nuestra colección. Escanea el QR en la vitrina o selecciona una especie para verla en realidad aumentada.</p>
+  <h1>Catalogo de Especies</h1>
+  <p>Explora los escaneos 3D de nuestra coleccion. Escanea el QR en la vitrina o selecciona una especie para verla en realidad aumentada.</p>
 </div>
 
 <div class="gallery">
   <% if (species.length === 0) { %>
     <div class="empty-state">
-      <div class="empty-icon">📦</div>
-      <h2>No hay especies aún</h2>
-      <p>Ve al <a href="/admin">panel de administración</a> para añadir la primera especie.</p>
+      <div class="empty-icon">&#x1F331;</div>
+      <h2>No hay especies aun</h2>
+      <p>Ve al <a href="/admin">panel de administracion</a> para anadir la primera especie a la coleccion.</p>
     </div>
   <% } else { %>
     <% species.forEach(item => { %>

@@ -1,6 +1,6 @@
 <div class="species-page">
   <div class="species-viewer-section" id="viewer-container">
-    <% if (species.modelFormat === '.glb' || species.modelFormat === '.gltf') { %>
+    <% if (isGLB && !hasTextures) { %>
       <model-viewer
         id="model-viewer"
         src="<%= species.modelPath %>"
@@ -52,7 +52,7 @@
 
     <div class="ar-info" id="ar-info-panel">
       <h3>Realidad Aumentada</h3>
-      <% if (species.modelFormat === '.glb' || species.modelFormat === '.gltf') { %>
+      <% if (isGLB && !hasTextures) { %>
         <div id="ar-status">Comprobando disponibilidad AR...</div>
         <p id="ar-hint">Abre en tu movil y toca el boton flotante sobre el modelo para colocarlo en tu espacio real.</p>
         <div class="ar-actions">
@@ -77,7 +77,7 @@
   </div>
 </div>
 
-<% if (species.modelFormat !== '.glb' && species.modelFormat !== '.gltf') { %>
+<% if (!isGLB || hasTextures) { %>
 <script type="importmap">
 {
   "imports": {
@@ -94,7 +94,7 @@ const container = document.getElementById('three-container');
 const loadingEl = document.getElementById('three-loading');
 
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x111122);
+scene.background = new THREE.Color(0xF5EFE8);
 
 const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.01, 500);
 camera.position.set(3, 2, 5);
@@ -102,7 +102,7 @@ camera.position.set(3, 2, 5);
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(container.clientWidth, container.clientHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-renderer.setClearColor(0x111122);
+renderer.setClearColor(0xF5EFE8);
 container.appendChild(renderer.domElement);
 
 const controls = new OrbitControls(camera, renderer.domElement);
@@ -121,7 +121,7 @@ const backLight = new THREE.DirectionalLight(0xffffff, 0.5);
 backLight.position.set(-3, 1, -2);
 scene.add(backLight);
 
-scene.add(new THREE.GridHelper(5, 20, 0x333355, 0x222244));
+scene.add(new THREE.GridHelper(5, 20, 0xD5C9B8, 0xE8DDD0));
 
 function fitCameraToObject(object) {
   const box = new THREE.Box3().setFromObject(object);
@@ -262,6 +262,38 @@ async function loadModel() {
       scene.add(object);
       if (loadingEl) loadingEl.remove();
       fitCameraToObject(object);
+    } else {
+      // GLB/GLTF with textures: use Three.js GLTFLoader
+      const { GLTFLoader } = await import('three/addons/loaders/GLTFLoader.js');
+      const loader = new GLTFLoader();
+      const gltf = await loader.loadAsync(modelPath);
+
+      if (texturePaths.length > 0) {
+        const texLoader = new THREE.TextureLoader();
+        const textures = [];
+        for (const t of texturePaths) {
+          try {
+            const tex = await texLoader.loadAsync(t.path);
+            tex.colorSpace = THREE.SRGBColorSpace;
+            textures.push({ name: t.name.toLowerCase(), texture: tex });
+          } catch (e) { console.warn('Texture load failed:', t.path, e); }
+        }
+        gltf.scene.traverse(child => {
+          if (child.isMesh && textures.length > 0) {
+            const childName = (child.name || '').toLowerCase();
+            const texMatch = textures.find(t => childName.includes(t.name)) || textures[0];
+            child.material = new THREE.MeshStandardMaterial({
+              map: texMatch.texture,
+              roughness: 0.5,
+              metalness: 0.05
+            });
+          }
+        });
+      }
+
+      scene.add(gltf.scene);
+      if (loadingEl) loadingEl.remove();
+      fitCameraToObject(gltf.scene);
     }
   } catch (err) {
     console.error('Error cargando modelo:', err);

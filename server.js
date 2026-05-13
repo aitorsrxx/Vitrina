@@ -97,7 +97,9 @@ app.get('/especie/:id', async (req, res) => {
 
   species.qrCode = `/qrcodes/${qrFilename}`;
   species.qrUrl = qrUrl;
-  res.render('layout', { body: 'species', species, title: species.name });
+  const isGLB = species.modelFormat === '.glb' || species.modelFormat === '.gltf';
+  const hasTextures = species.textures && species.textures.length > 0;
+  res.render('layout', { body: 'species', species, title: species.name, isGLB, hasTextures });
 });
 
 app.post('/admin/upload', upload.fields([
