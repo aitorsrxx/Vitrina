@@ -58,6 +58,11 @@
         <div class="ar-actions">
           <button id="btn-ar-activate" class="btn-ar" onclick="triggerAR()"> Activar AR </button>
         </div>
+      <% } else if (isGLB && hasTextures) { %>
+        <p>AR desactivado &mdash; este GLB tiene texturas externas cargadas que requieren el visor Three.js. <a href="#" onclick="alert('Para usar AR: elimina las texturas en /admin o sube un GLB sin texturas externas.')" style="color:var(--sage-dark);text-decoration:underline">Como activar AR</a></p>
+        <div class="ar-actions">
+          <button class="btn-ar" disabled style="opacity:0.5;cursor:not-allowed">AR desactivado (texturas externas)</button>
+        </div>
       <% } else { %>
         <p>AR solo disponible con modelos GLB/GLTF. Convierte tu archivo a GLB para usar esta funcion.</p>
         <div class="ar-actions">

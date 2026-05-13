@@ -16,6 +16,8 @@
         <div class="card-image">
           <% if (item.thumbnail) { %>
             <img src="<%= item.thumbnail %>" alt="<%= item.name %>" loading="lazy">
+          <% } else if (item.textures && item.textures.length > 0) { %>
+            <img src="<%= item.textures[0].path %>" alt="<%= item.name %>" loading="lazy">
           <% } else { %>
             <div class="card-placeholder">
               <model-viewer
