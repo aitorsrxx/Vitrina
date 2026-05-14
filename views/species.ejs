@@ -1,32 +1,15 @@
 <div class="species-page">
   <div class="species-viewer-section" id="viewer-container">
-    <% if (isGLB && !hasTextures) { %>
-      <model-viewer
-        id="model-viewer"
-        src="<%= species.modelPath %>"
-        ios-src="<%= species.modelPath.replace(/\.glb$/i, '.usdz').replace(/\.gltf$/i, '.usdz') %>"
-        ar
-        ar-modes="webxr scene-viewer quick-look"
-        ar-scale="<%= species.arScale %>"
-        ar-placement="floor"
-        camera-controls
-        touch-action="pan-y"
-        shadow-intensity="1"
-        exposure="1"
-        environment-image="neutral"
-        style="width:100%;height:100%"
-        poster="<%= species.thumbnail || '' %>"
-        reveal="auto"
-        loading="eager"
-      >
-        <button slot="ar-button" class="ar-button" id="ar-slot-button">
-          <span id="ar-icon">&#x1F4F1;</span> Ver en tu espacio
-        </button>
-        <div slot="progress-bar" style="position:absolute;bottom:0;left:0;width:100%;height:4px;background:#333">
-          <div style="height:100%;background:var(--accent);width:0%" id="mv-progress"></div>
+      <% if (isGLB) { %>
+        <div id="ar-status">Comprobando disponibilidad AR...</div>
+        <p id="ar-hint">Abre en tu movil y toca el boton flotante sobre el modelo para colocarlo en tu espacio real.</p>
+        <% if (hasTextures) { %>
+        <p style="font-size:0.8rem;color:var(--gold);margin-top:0.5rem">Tienes texturas externas. Para verlas en el modelo, hornea (bake) las texturas dentro del GLB al exportarlo.</p>
+        <% } %>
+        <div class="ar-actions">
+          <button id="btn-ar-activate" class="btn-ar" onclick="triggerAR()"> Activar AR </button>
         </div>
-      </model-viewer>
-    <% } else { %>
+      <% } else { %>
       <div id="three-container" style="width:100%;height:100%">
         <div class="three-loading" id="three-loading">
           <div class="spinner"></div>
@@ -52,7 +35,7 @@
 
     <div class="ar-info" id="ar-info-panel">
       <h3>Realidad Aumentada</h3>
-      <% if (isGLB && !hasTextures) { %>
+    <% if (isGLB) { %>
         <div id="ar-status">Comprobando disponibilidad AR...</div>
         <p id="ar-hint">Abre en tu movil y toca el boton flotante sobre el modelo para colocarlo en tu espacio real.</p>
         <div class="ar-actions">
@@ -82,7 +65,7 @@
   </div>
 </div>
 
-<% if (!isGLB || hasTextures) { %>
+<% if (!isGLB) { %>
 <script type="importmap">
 {
   "imports": {
