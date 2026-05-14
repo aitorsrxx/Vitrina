@@ -1,15 +1,29 @@
 <div class="species-page">
   <div class="species-viewer-section" id="viewer-container">
-      <% if (isGLB) { %>
-        <div id="ar-status">Comprobando disponibilidad AR...</div>
-        <p id="ar-hint">Abre en tu movil y toca el boton flotante sobre el modelo para colocarlo en tu espacio real.</p>
-        <% if (hasTextures) { %>
-        <p style="font-size:0.8rem;color:var(--gold);margin-top:0.5rem">Tienes texturas externas. Para verlas en el modelo, hornea (bake) las texturas dentro del GLB al exportarlo.</p>
-        <% } %>
-        <div class="ar-actions">
-          <button id="btn-ar-activate" class="btn-ar" onclick="triggerAR()"> Activar AR </button>
+    <% if (isGLB) { %>
+      <model-viewer
+        id="model-viewer"
+        src="<%= species.modelPath %>"
+        ar
+        ar-modes="webxr scene-viewer quick-look"
+        ar-scale="<%= species.arScale %>"
+        ar-placement="floor"
+        camera-controls
+        touch-action="pan-y"
+        shadow-intensity="1"
+        exposure="1"
+        environment-image="neutral"
+        style="width:100%;height:100%"
+        poster="<%= species.thumbnail || '' %>"
+        reveal="auto"
+        loading="eager"
+      >
+        <button slot="ar-button" class="ar-button" id="ar-slot-button"> Ver en tu espacio </button>
+        <div slot="progress-bar" style="position:absolute;bottom:0;left:0;width:100%;height:4px;background:#333">
+          <div style="height:100%;background:var(--sage-dark);width:0%" id="mv-progress"></div>
         </div>
-      <% } else { %>
+      </model-viewer>
+    <% } else { %>
       <div id="three-container" style="width:100%;height:100%">
         <div class="three-loading" id="three-loading">
           <div class="spinner"></div>
@@ -20,7 +34,7 @@
   </div>
 
   <div class="species-sidebar">
-    <a href="/" class="back-link">&larr; Volver al catálogo</a>
+    <a href="/" class="back-link">&larr; Volver al catalogo</a>
     <h1><%= species.name %></h1>
     <% if (species.scientificName) { %>
       <p class="scientific-name"><%= species.scientificName %></p>
@@ -29,25 +43,23 @@
       <p class="description"><%= species.description %></p>
     <% } %>
     <% if (species.habitat) { %>
-      <p class="habitat"><strong>Hábitat:</strong> <%= species.habitat %></p>
+      <p class="habitat"><strong>Habitat:</strong> <%= species.habitat %></p>
     <% } %>
     <p class="model-info"><small>Formato: <%= species.modelFormat.replace('.','').toUpperCase() %></small></p>
 
     <div class="ar-info" id="ar-info-panel">
       <h3>Realidad Aumentada</h3>
-    <% if (isGLB) { %>
-        <div id="ar-status">Comprobando disponibilidad AR...</div>
-        <p id="ar-hint">Abre en tu movil y toca el boton flotante sobre el modelo para colocarlo en tu espacio real.</p>
+      <% if (isGLB) { %>
+        <div id="ar-status">Listo &mdash; abre en tu movil</div>
+        <p id="ar-hint">Toca el boton flotante sobre el modelo para colocarlo en tu espacio real.</p>
+        <% if (hasTextures) { %>
+          <p style="font-size:0.8rem;color:var(--gold);margin-top:0.5rem">Texturas externas no se ven en AR. Hornea (bake) las texturas dentro del GLB al exportarlo.</p>
+        <% } %>
         <div class="ar-actions">
           <button id="btn-ar-activate" class="btn-ar" onclick="triggerAR()"> Activar AR </button>
         </div>
-      <% } else if (isGLB && hasTextures) { %>
-        <p>AR desactivado &mdash; este GLB tiene texturas externas cargadas que requieren el visor Three.js. <a href="#" onclick="alert('Para usar AR: elimina las texturas en /admin o sube un GLB sin texturas externas.')" style="color:var(--sage-dark);text-decoration:underline">Como activar AR</a></p>
-        <div class="ar-actions">
-          <button class="btn-ar" disabled style="opacity:0.5;cursor:not-allowed">AR desactivado (texturas externas)</button>
-        </div>
       <% } else { %>
-        <p>AR solo disponible con modelos GLB/GLTF. Convierte tu archivo a GLB para usar esta funcion.</p>
+        <p>AR solo disponible con GLB/GLTF. Convierte tu archivo a GLB.</p>
         <div class="ar-actions">
           <button class="btn-ar" disabled style="opacity:0.5;cursor:not-allowed">AR no disponible</button>
         </div>
@@ -56,7 +68,7 @@
 
     <div class="qr-section">
       <h3>QR para la vitrina</h3>
-      <p>Imprime este código QR y colócalo junto a la especie en la vitrina.</p>
+      <p>Imprime este codigo QR y colocalo junto a la especie.</p>
       <div class="qr-container">
         <img src="<%= species.qrCode %>" alt="QR para <%= species.name %>" class="qr-image">
       </div>
