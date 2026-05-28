@@ -7,17 +7,20 @@ const { v4: uuidv4 } = require('uuid');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const DATA_DIR = process.env.DATA_DIR || path.join(__dirname, 'data');
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+const UPLOADS_DIR = path.join(DATA_DIR, 'uploads');
+const QR_DIR = path.join(DATA_DIR, 'qrcodes');
+const DATA_FILE = path.join(DATA_DIR, 'species.json');
+
+app.use('/uploads', express.static(UPLOADS_DIR));
+app.use('/qrcodes', express.static(QR_DIR));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true, limit: '500mb' }));
 app.use(express.json({ limit: '500mb' }));
-
-const DATA_FILE = path.join(__dirname, 'data', 'species.json');
-const UPLOADS_DIR = path.join(__dirname, 'public', 'uploads');
-const QR_DIR = path.join(__dirname, 'public', 'qrcodes');
 
 [UPLOADS_DIR, QR_DIR, path.dirname(DATA_FILE)].forEach(dir => {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
@@ -145,19 +148,19 @@ app.post('/admin/delete/:id', (req, res) => {
   let species = loadSpecies();
   const item = species.find(s => s.id === req.params.id);
   if (item) {
-    const modelPath = path.join(__dirname, 'public', item.modelPath);
+    const modelFilePath = path.join(UPLOADS_DIR, path.basename(item.modelPath));
     const qrPath = path.join(QR_DIR, `qr-${item.id}.png`);
     if (item.thumbnail) {
-      const thumbPath = path.join(__dirname, 'public', item.thumbnail);
+      const thumbPath = path.join(UPLOADS_DIR, path.basename(item.thumbnail));
       if (fs.existsSync(thumbPath)) fs.unlinkSync(thumbPath);
     }
     if (item.textures) {
       item.textures.forEach(t => {
-        const texPath = path.join(__dirname, 'public', t.path);
+        const texPath = path.join(UPLOADS_DIR, path.basename(t.path));
         if (fs.existsSync(texPath)) fs.unlinkSync(texPath);
       });
     }
-    if (fs.existsSync(modelPath)) fs.unlinkSync(modelPath);
+    if (fs.existsSync(modelFilePath)) fs.unlinkSync(modelFilePath);
     if (fs.existsSync(qrPath)) fs.unlinkSync(qrPath);
   }
   species = species.filter(s => s.id !== req.params.id);
