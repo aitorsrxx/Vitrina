@@ -407,14 +407,36 @@ window.addEventListener('resize', () => {
 
   if (mv) {
     mv.addEventListener('load', () => {
-      // Fix transparency in AR: force all materials to opaque
-      if (mv.model && mv.model.materials) {
-        mv.model.materials.forEach(mat => {
-          mat.setAlphaMode('OPAQUE');
-          mat.setOcclusionStrength(1);
-          mat.pbrMetallicRoughness.setRoughnessFactor(Math.min(mat.pbrMetallicRoughness.roughnessFactor, 0.9));
-        });
-      }
+      // Fix mobile transparency: force all materials opaque
+      try {
+        const fixMaterials = () => {
+          if (!mv.model) return;
+          // Try model-viewer 3.x/4.x materials API
+          const mats = mv.model.materials || mv.model?.userData?.materials || [];
+          if (Array.isArray(mats) && mats.length > 0) {
+            mats.forEach(mat => {
+              try { mat.setAlphaMode('OPAQUE'); } catch(_) {}
+              try { mat.pbrMetallicRoughness?.setBaseColorFactor?.([1,1,1,1]); } catch(_) {}
+            });
+          }
+          // Also try Three.js traversal via model-viewer internals
+          try {
+            mv.model.traverse(node => {
+              if (node.isMesh && node.material) {
+                const m = node.material;
+                m.transparent = false;
+                m.opacity = 1;
+                m.alphaTest = 0;
+                m.depthWrite = true;
+                m.needsUpdate = true;
+              }
+            });
+          } catch(_) {}
+        };
+        fixMaterials();
+        // Re-apply after a short delay for async material loading
+        setTimeout(fixMaterials, 500);
+      } catch(_) {}
 
       if (mv.canActivateAR) {
         if (arStatus) arStatus.innerHTML = '<span style="color:var(--sage-dark)">AR disponible</span> &mdash; toca el boton flotante o "Activar AR"';
@@ -429,13 +451,19 @@ window.addEventListener('resize', () => {
     mv.addEventListener('ar-status', (e) => {
       const s = e.detail.status;
       if (s === 'session-started') {
-        // Re-force opaque when AR starts
-        if (mv.model && mv.model.materials) {
-          mv.model.materials.forEach(mat => {
-            mat.setAlphaMode('OPAQUE');
-            mat.setOcclusionStrength(1);
-          });
-        }
+        // Re-fix materials when AR starts
+        try {
+          if (mv.model) {
+            mv.model.traverse(node => {
+              if (node.isMesh && node.material) {
+                node.material.transparent = false;
+                node.material.opacity = 1;
+                node.material.depthWrite = true;
+                node.material.needsUpdate = true;
+              }
+            });
+          }
+        } catch(_) {}
         if (arStatus) arStatus.innerHTML = '<span style="color:var(--sage-dark)">AR activa</span> &mdash; apunta la camara a una superficie plana para colocar el modelo.';
       } else if (s === 'object-placed') {
         if (arStatus) arStatus.innerHTML = '<span style="color:var(--sage-dark)">Modelo colocado</span> &mdash; muevete alrededor. Si no lo ves, mira hacia el suelo.';
