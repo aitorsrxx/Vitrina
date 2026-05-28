@@ -407,6 +407,15 @@ window.addEventListener('resize', () => {
 
   if (mv) {
     mv.addEventListener('load', () => {
+      // Fix transparency in AR: force all materials to opaque
+      if (mv.model && mv.model.materials) {
+        mv.model.materials.forEach(mat => {
+          mat.setAlphaMode('OPAQUE');
+          mat.setOcclusionStrength(1);
+          mat.pbrMetallicRoughness.setRoughnessFactor(Math.min(mat.pbrMetallicRoughness.roughnessFactor, 0.9));
+        });
+      }
+
       if (mv.canActivateAR) {
         if (arStatus) arStatus.innerHTML = '<span style="color:var(--sage-dark)">AR disponible</span> &mdash; toca el boton flotante o "Activar AR"';
         if (arBtn) { arBtn.disabled = false; arBtn.style.opacity = '1'; }
@@ -420,6 +429,13 @@ window.addEventListener('resize', () => {
     mv.addEventListener('ar-status', (e) => {
       const s = e.detail.status;
       if (s === 'session-started') {
+        // Re-force opaque when AR starts
+        if (mv.model && mv.model.materials) {
+          mv.model.materials.forEach(mat => {
+            mat.setAlphaMode('OPAQUE');
+            mat.setOcclusionStrength(1);
+          });
+        }
         if (arStatus) arStatus.innerHTML = '<span style="color:var(--sage-dark)">AR activa</span> &mdash; apunta la camara a una superficie plana para colocar el modelo.';
       } else if (s === 'object-placed') {
         if (arStatus) arStatus.innerHTML = '<span style="color:var(--sage-dark)">Modelo colocado</span> &mdash; muevete alrededor. Si no lo ves, mira hacia el suelo.';
