@@ -93,7 +93,7 @@ const container = document.getElementById('three-container');
 const loadingEl = document.getElementById('three-loading');
 
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0xF5EFE8);
+scene.background = new THREE.Color(0x1a1a1a);
 
 const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.01, 500);
 camera.position.set(3, 2, 5);
@@ -101,7 +101,7 @@ camera.position.set(3, 2, 5);
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(container.clientWidth, container.clientHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-renderer.setClearColor(0xF5EFE8);
+renderer.setClearColor(0x1a1a1a);
 container.appendChild(renderer.domElement);
 
 const controls = new OrbitControls(camera, renderer.domElement);
@@ -120,7 +120,7 @@ const backLight = new THREE.DirectionalLight(0xffffff, 0.5);
 backLight.position.set(-3, 1, -2);
 scene.add(backLight);
 
-scene.add(new THREE.GridHelper(5, 20, 0xD5C9B8, 0xE8DDD0));
+scene.add(new THREE.GridHelper(5, 20, 0x333333, 0x222222));
 
 function fitCameraToObject(object) {
   const box = new THREE.Box3().setFromObject(object);
@@ -206,7 +206,7 @@ async function loadModel() {
       } else {
         material = new THREE.MeshStandardMaterial({
           vertexColors: hasColors,
-          color: hasColors ? 0xffffff : 0x8b9dc3,
+          color: hasColors ? 0xffffff : 0x888888,
           roughness: 0.5,
           metalness: 0.05,
           flatShading: false
@@ -254,7 +254,7 @@ async function loadModel() {
               metalness: 0.05
             });
           } else if (!child.material || (Array.isArray(child.material) && child.material.length === 0)) {
-            child.material = new THREE.MeshStandardMaterial({ color: 0x8b9dc3, roughness: 0.5 });
+            child.material = new THREE.MeshStandardMaterial({ color: 0x888888, roughness: 0.5 });
           }
         }
       });
