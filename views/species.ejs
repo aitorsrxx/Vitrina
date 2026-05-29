@@ -52,7 +52,7 @@
         <div id="ar-status">Listo &mdash; abre en tu movil</div>
         <p id="ar-hint">Toca el boton flotante sobre el modelo para colocarlo en tu espacio real.</p>
         <% if (hasTextures) { %>
-          <p style="font-size:0.8rem;color:var(--gold);margin-top:0.5rem">Texturas externas no se ven en AR. Hornea (bake) las texturas dentro del GLB al exportarlo.</p>
+          <p style="font-size:0.8rem;color:var(--accent);margin-top:0.5rem">Texturas externas no se ven en AR. Hornea (bake) las texturas dentro del GLB al exportarlo.</p>
         <% } %>
         <div class="ar-actions">
           <button id="btn-ar-activate" class="btn-ar" onclick="triggerAR()"> Activar AR </button>
@@ -432,7 +432,7 @@ window.addEventListener('resize', () => {
         if (arStatus) arStatus.innerHTML = '<span style="color:var(--sage-dark)">AR disponible</span> &mdash; toca el boton flotante o "Activar AR"';
         if (arBtn) { arBtn.disabled = false; arBtn.style.opacity = '1'; }
       } else if (isMobile) {
-        if (arStatus) arStatus.innerHTML = '<span style="color:var(--gold)">AR no soportada</span> &mdash; usa Chrome en Android o Safari en iOS 12+.';
+        if (arStatus) arStatus.innerHTML = '<span style="color:var(--accent)">AR no soportada</span> &mdash; usa Chrome en Android o Safari en iOS 12+.';
       } else {
         if (arStatus) arStatus.innerHTML = '<span style="color:var(--bark-light)">Listo</span> &mdash; abre en movil para AR.';
       }

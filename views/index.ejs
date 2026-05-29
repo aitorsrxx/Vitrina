@@ -1,4 +1,17 @@
 <div class="landing">
+  <div class="fluid-bg" aria-hidden="true">
+    <svg style="position:absolute;width:0;height:0;">
+      <filter id="goo">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="16" result="blur" />
+        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -8" result="goo" />
+        <feComposite in="SourceGraphic" in2="goo" operator="atop" />
+      </filter>
+    </svg>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+    <div class="blob blob-4"></div>
+  </div>
   <!-- Hero -->
   <section class="hero-section">
     <div class="hero-bg">
@@ -154,6 +167,26 @@
           video.play();
         });
       }
+
+      var blobs = document.querySelectorAll('.blob');
+      var lastScrollY = window.scrollY;
+      var scrollSpeed = 0;
+
+      window.addEventListener('scroll', function() {
+        var currentScroll = window.scrollY;
+        scrollSpeed = Math.abs(currentScroll - lastScrollY);
+        lastScrollY = currentScroll;
+
+        var intensity = Math.min(scrollSpeed / 10, 3);
+        var offsetY = currentScroll * 0.05;
+
+        blobs.forEach(function(blob, i) {
+          var factor = 1 + (i + 1) * 0.3;
+          var dur = Math.max(8, 18 - intensity * factor);
+          blob.style.animationDuration = dur + 's';
+          blob.style.transform = 'translateY(' + (offsetY * (i % 2 === 0 ? 1 : -1) * 0.5) + 'px)';
+        });
+      }, { passive: true });
     })();
   </script>
 </div>
