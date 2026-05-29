@@ -139,23 +139,22 @@ body::before {
   position: fixed;
   top: 0;
   bottom: 0;
-  width: 320px;
+  width: 500px;
   z-index: -1;
   pointer-events: none;
-  opacity: 0.25;
+  opacity: 0.4;
   background-size: auto 100%;
   background-repeat: no-repeat;
-  background-position: center left;
 }
 .branch-left {
-  left: 0;
+  left: -80px;
   background-image: url('/assets/branch.png');
   background-position: left center;
 }
 .branch-right {
-  right: 0;
+  right: -80px;
   background-image: url('/assets/branch.png');
-  background-position: right center;
+  background-position: left center;
   transform: scaleX(-1);
 }
 
