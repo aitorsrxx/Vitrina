@@ -145,17 +145,33 @@ body::before {
   opacity: 0.4;
   background-size: auto 100%;
   background-repeat: no-repeat;
+  will-change: transform;
 }
 .branch-left {
   left: -80px;
   background-image: url('/assets/branch.png');
   background-position: left center;
+  animation: branchSwayL 14s ease-in-out infinite;
 }
 .branch-right {
   right: -80px;
   background-image: url('/assets/branch.png');
   background-position: left center;
   transform: scaleX(-1);
+  animation: branchSwayR 16s ease-in-out infinite;
+}
+
+@keyframes branchSwayL {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(4px, 6px) rotate(0.8deg); }
+  50% { transform: translate(8px, -4px) rotate(-0.6deg); }
+  75% { transform: translate(2px, 8px) rotate(0.4deg); }
+}
+@keyframes branchSwayR {
+  0%, 100% { transform: scaleX(-1) translate(0, 0) rotate(0deg); }
+  25% { transform: scaleX(-1) translate(4px, -6px) rotate(-0.8deg); }
+  50% { transform: scaleX(-1) translate(8px, 4px) rotate(0.6deg); }
+  75% { transform: scaleX(-1) translate(2px, -8px) rotate(-0.4deg); }
 }
 
 /* ═══════════════ HERO ═══════════════ */
