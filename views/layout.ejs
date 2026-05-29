@@ -8,18 +8,18 @@
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Montserrat:wght@300;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Montserrat:wght@300;700;900&display=swap" rel="stylesheet">
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 </head>
 <body>
-  <nav class="navbar" data-aos="fade-down" data-aos-duration="600">
+  <nav class="navbar" id="navbar">
     <div class="nav-container">
       <a href="/" class="nav-logo">Vitrina 3D</a>
       <div class="nav-links">
-        <a href="/#galeria">Coleccion</a>
-        <a href="/#features">Info</a>
-        <a href="/admin">Admin</a>
+        <a href="/#galeria" class="nav-link">Coleccion</a>
+        <a href="/#features" class="nav-link">Info</a>
+        <a href="/admin" class="nav-link">Admin</a>
       </div>
     </div>
   </nav>
@@ -48,6 +48,19 @@
   </footer>
   <script>
     AOS.init({ duration: 700, easing: 'ease-out-cubic', once: true, offset: 60 });
+
+    var navbar = document.getElementById('navbar');
+    if (navbar) {
+      var onScroll = function() {
+        if (window.scrollY > 40) {
+          navbar.classList.add('scrolled');
+        } else {
+          navbar.classList.remove('scrolled');
+        }
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    }
   </script>
 </body>
 </html>
