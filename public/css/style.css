@@ -21,21 +21,26 @@
   --transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-@font-face {
-  font-family: 'Cormorant';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Cormorant Garamond'), local('Georgia');
-}
-
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background: var(--white);
   color: var(--black);
   min-height: 100vh;
   line-height: 1.6;
   letter-spacing: 0.01em;
   -webkit-font-smoothing: antialiased;
+  background-image: url('/assets/hero.webp');
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: rgba(255,255,255,0.88);
+  pointer-events: none;
 }
 
 /* ═══════════════ NAVBAR ═══════════════ */
@@ -55,9 +60,9 @@ body {
   align-items: center;
 }
 .nav-logo {
-  font-family: 'Georgia', 'Cormorant Garamond', serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 1.2rem;
-  font-weight: 400;
+  font-weight: 900;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--black);
@@ -95,12 +100,11 @@ body {
   inset: 0;
   z-index: 0;
 }
-.hero-bg-img {
+.hero-bg-video {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: brightness(0.5) blur(1px) saturate(0.6);
-  transform: scale(1.03);
+  filter: brightness(0.4) saturate(0.7);
 }
 .hero-overlay {
   position: absolute;
@@ -117,9 +121,9 @@ body {
 }
 .hero-tag {
   display: inline-block;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 0.68rem;
-  font-weight: 400;
+  font-weight: 300;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--gold-light);
@@ -128,9 +132,9 @@ body {
   border-bottom: 1px solid rgba(255,255,255,0.15);
 }
 .hero-content h1 {
-  font-family: 'Georgia', 'Cormorant Garamond', serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: clamp(3rem, 7vw, 5.5rem);
-  font-weight: 400;
+  font-weight: 900;
   color: var(--white);
   line-height: 1.1;
   margin-bottom: 1.5rem;
@@ -233,9 +237,9 @@ body {
 .section-header { text-align: center; margin-bottom: 5rem; }
 .section-tag {
   display: inline-block;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 0.65rem;
-  font-weight: 400;
+  font-weight: 300;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--gold-dark);
@@ -244,9 +248,9 @@ body {
   border-bottom: 1px solid var(--gray-pale);
 }
 .section-header h2 {
-  font-family: 'Georgia', 'Cormorant Garamond', serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 400;
+  font-weight: 900;
   color: var(--black);
   margin-bottom: 0.75rem;
   letter-spacing: -0.01em;
@@ -281,9 +285,9 @@ body {
   color: var(--gold-dark);
 }
 .feature-card h3 {
-  font-family: 'Georgia', serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 1.3rem;
-  font-weight: 400;
+  font-weight: 900;
   margin-bottom: 1rem;
   color: var(--black);
   letter-spacing: -0.01em;
@@ -312,17 +316,17 @@ body {
 }
 .step-item:first-child { border-top: 1px solid #e5e5e5; }
 .step-number {
-  font-family: 'Georgia', serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 1.1rem;
-  font-weight: 400;
+  font-weight: 300;
   color: var(--gold-dark);
   min-width: 50px;
   padding-top: 2px;
 }
 .step-text h3 {
-  font-family: 'Georgia', serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 1.4rem;
-  font-weight: 400;
+  font-weight: 900;
   margin-bottom: 0.5rem;
   color: var(--black);
 }
@@ -362,9 +366,9 @@ body {
   border-top: 1px solid #f0f0f0;
 }
 .card-info h3 {
-  font-family: 'Georgia', 'Cormorant Garamond', serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 1.1rem;
-  font-weight: 400;
+  font-weight: 900;
   margin-bottom: 0.25rem;
   letter-spacing: 0.01em;
 }
@@ -384,9 +388,9 @@ body {
 }
 .empty-icon { font-size: 2rem; margin-bottom: 1.5rem; opacity: 0.3; }
 .empty-state h2 {
-  font-family: 'Georgia', serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 1.6rem;
-  font-weight: 400;
+  font-weight: 900;
   margin-bottom: 0.75rem;
 }
 .empty-state p { color: var(--gray-mid); font-size: 0.95rem; font-weight: 300; }
@@ -404,9 +408,9 @@ body {
   margin: 0 auto;
 }
 .cta-content h2 {
-  font-family: 'Georgia', serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 2.2rem;
-  font-weight: 400;
+  font-weight: 900;
   color: var(--white);
   margin-bottom: 1.25rem;
   letter-spacing: -0.01em;
@@ -476,9 +480,9 @@ body {
 }
 .back-link:hover { color: var(--black); }
 .species-sidebar h1 {
-  font-family: 'Georgia', 'Cormorant Garamond', serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 2rem;
-  font-weight: 400;
+  font-weight: 900;
   color: var(--black);
   line-height: 1.2;
   letter-spacing: -0.01em;
@@ -571,9 +575,9 @@ body {
   padding: 4rem 3rem;
 }
 .admin-page h1 {
-  font-family: 'Georgia', 'Cormorant Garamond', serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 2.5rem;
-  font-weight: 400;
+  font-weight: 900;
   margin-bottom: 0.5rem;
   letter-spacing: -0.01em;
 }
@@ -602,9 +606,9 @@ body {
 .card:first-child { border-right: 1px solid #e5e5e5; }
 
 .upload-form h2, .species-list h2 {
-  font-family: 'Georgia', serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 1.3rem;
-  font-weight: 400;
+  font-weight: 900;
   margin-bottom: 2rem;
 }
 
@@ -739,15 +743,15 @@ body {
   margin: 0 auto;
 }
 .error-page h1 {
-  font-family: 'Georgia', serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 6rem;
-  font-weight: 300;
+  font-weight: 900;
   color: var(--gray-pale);
   margin-bottom: 1.5rem;
 }
 .error-page h2 {
-  font-family: 'Georgia', serif;
-  font-weight: 400;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
   font-size: 1.5rem;
   margin-bottom: 0.75rem;
 }
@@ -786,9 +790,9 @@ body {
 }
 .footer-info { flex: 1; min-width: 240px; }
 .footer-info h4 {
-  font-family: 'Georgia', serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 1rem;
-  font-weight: 400;
+  font-weight: 900;
   color: var(--white);
   margin-bottom: 0.5rem;
 }
