@@ -330,6 +330,16 @@ body::before {
   50% { opacity: 0.8; height: 52px; }
 }
 
+/* ═══════════════ HERO BOTTOM FADE ═══════════════ */
+.hero-bottom-fade {
+  height: 120px;
+  background: linear-gradient(to bottom, #111111 0%, #111111 30%, rgba(17,17,17,0.6) 70%, transparent 100%);
+  pointer-events: none;
+  position: relative;
+  z-index: 1;
+  margin-top: -120px;
+}
+
 /* ═══════════════ SECTIONS ═══════════════ */
 .features-section, .steps-section {
   max-width: 1440px;
