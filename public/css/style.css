@@ -148,7 +148,7 @@ body::before {
   transform-origin: left;
 }
 
-.main-content { max-width: 100%; margin: 0; padding: 0; padding-top: 64px; }
+.main-content { max-width: 100%; margin: 0; padding: 0; }
 
 /* ═══════════════ BRANCH DECORATIONS ═══════════════ */
 .branch-decor {
